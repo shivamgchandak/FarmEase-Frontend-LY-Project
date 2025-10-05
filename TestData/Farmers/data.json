@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Ramesh Verma",
+    "rating": 4.5,
+    "farmName": "Verma Ji's Farm",
+    "description": "Specializes in organic cauliflower and seasonal vegetables.",
+    "location": "Sehore",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 2,
+    "name": "Anil Gupta",
+    "rating": 4.5,
+    "farmName": "Gupta Farms",
+    "description": "Produces fresh tomatoes, chilies, and onions with sustainable methods.",
+    "location": "Indore",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 3,
+    "name": "Suresh Patel",
+    "rating": 4.5,
+    "farmName": "Patel Organic Fields",
+    "description": "Known for high-quality potatoes and wheat crops.",
+    "location": "Bhopal",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 4,
+    "name": "Harbhajan Singh",
+    "rating": 4.5,
+    "farmName": "Singh Farms",
+    "description": "Cultivates onions, garlic, and corn using eco-friendly practices.",
+    "location": "Amritsar",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 5,
+    "name": "Mahesh Chaudhary",
+    "rating": 4.5,
+    "farmName": "Chaudhary Fresh Produce",
+    "description": "Supplies carrots, cabbages, and leafy greens to local markets.",
+    "location": "Dewas",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 6,
+    "name": "Arun Sharma",
+    "rating": 4.5,
+    "farmName": "Sharma Orchards",
+    "description": "Specializes in apples and stone fruits grown in hilly regions.",
+    "location": "Shimla",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 7,
+    "name": "Rajesh Joshi",
+    "rating": 4.5,
+    "farmName": "Joshi Mango Farms",
+    "description": "Renowned for premium Alphonso mangoes and papayas.",
+    "location": "Ratnagiri",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 8,
+    "name": "Iqbal Khan",
+    "rating": 4.5,
+    "farmName": "Khan Citrus Orchards",
+    "description": "Produces juicy Nagpur oranges and seasonal fruits.",
+    "location": "Nagpur",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 9,
+    "name": "Mathew Thomas",
+    "rating": 4.5,
+    "farmName": "Mathew Pineapple Estate",
+    "description": "Famous for tropical pineapples and bananas.",
+    "location": "Ernakulam",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 10,
+    "name": "Vikram Mehta",
+    "rating": 4.5,
+    "farmName": "Mehta Agro Farms",
+    "description": "Focuses on barley, wheat, and pulses with modern irrigation.",
+    "location": "Jaipur",
+    "image": "@/assets/TestImages/TestImage.png"
+  }
+]

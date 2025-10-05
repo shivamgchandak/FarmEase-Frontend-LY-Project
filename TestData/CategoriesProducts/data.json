@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "name": "Cauliflower",
+    "rating": 5.0,
+    "price": "₹20/kg",
+    "category": "vegetable",
+    "description": "Crisp and dense, perfect for roasting or a classic Gobi sabzi.",
+    "farmName": "Verma Ji's Farm",
+    "location": "Sehore",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 2,
+    "name": "Tomatoes",
+    "rating": 4.8,
+    "price": "₹45/kg",
+    "category": "vegetable",
+    "description": "Juicy red tomatoes ideal for curries and salads.",
+    "farmName": "Gupta Farms",
+    "location": "Indore",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 3,
+    "name": "Potatoes",
+    "rating": 4.5,
+    "price": "₹30/kg",
+    "category": "vegetable",
+    "description": "Fresh potatoes, perfect for fries, curries, and snacks.",
+    "farmName": "Patel Farms",
+    "location": "Bhopal",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 4,
+    "name": "Onions",
+    "rating": 4.7,
+    "price": "₹35/kg",
+    "category": "vegetable",
+    "description": "Strong flavor onions, a staple for every Indian kitchen.",
+    "farmName": "Singh Farms",
+    "location": "Ujjain",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 5,
+    "name": "Carrots",
+    "rating": 4.9,
+    "price": "₹60/kg",
+    "category": "vegetable",
+    "description": "Sweet and crunchy carrots, rich in Vitamin A.",
+    "farmName": "Chaudhary Farms",
+    "location": "Dewas",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 6,
+    "name": "Apples",
+    "rating": 5.0,
+    "price": "₹150/kg",
+    "category": "fruits",
+    "description": "Fresh and juicy apples straight from Himachal orchards.",
+    "farmName": "Sharma Orchards",
+    "location": "Shimla",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 7,
+    "name": "Bananas",
+    "rating": 4.6,
+    "price": "₹50/dozen",
+    "category": "fruits",
+    "description": "Sweet bananas packed with natural energy and potassium.",
+    "farmName": "Rao Farms",
+    "location": "Pune",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 8,
+    "name": "Mangoes",
+    "rating": 5.0,
+    "price": "₹120/kg",
+    "category": "fruits",
+    "description": "Delicious Alphonso mangoes, the king of fruits.",
+    "farmName": "Joshi Farms",
+    "location": "Ratnagiri",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 9,
+    "name": "Oranges",
+    "rating": 4.7,
+    "price": "₹80/kg",
+    "category": "fruits",
+    "description": "Citrus-rich oranges full of Vitamin C.",
+    "farmName": "Khan Orchards",
+    "location": "Nagpur",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 10,
+    "name": "Pineapples",
+    "rating": 4.5,
+    "price": "₹90/piece",
+    "category": "fruits",
+    "description": "Tropical pineapples with a tangy-sweet taste.",
+    "farmName": "Mathew Farms",
+    "location": "Kerala",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 11,
+    "name": "Milk",
+    "rating": 5.0,
+    "price": "₹50/litre",
+    "category": "dairy",
+    "description": "Fresh cow milk, unadulterated and nutritious.",
+    "farmName": "Gaushala Dairy",
+    "location": "Ahmedabad",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 12,
+    "name": "Cheese",
+    "rating": 4.9,
+    "price": "₹200/500g",
+    "category": "dairy",
+    "description": "Creamy cheese, perfect for pizzas and sandwiches.",
+    "farmName": "Kumar Dairy",
+    "location": "Delhi",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 13,
+    "name": "Curd",
+    "rating": 4.7,
+    "price": "₹60/kg",
+    "category": "dairy",
+    "description": "Homemade curd, rich in probiotics and calcium.",
+    "farmName": "Reddy Dairy",
+    "location": "Hyderabad",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 14,
+    "name": "Butter",
+    "rating": 4.8,
+    "price": "₹250/kg",
+    "category": "dairy",
+    "description": "Pure white butter, churned from fresh milk.",
+    "farmName": "Mishra Dairy",
+    "location": "Lucknow",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 15,
+    "name": "Paneer",
+    "rating": 5.0,
+    "price": "₹300/kg",
+    "category": "dairy",
+    "description": "Soft and fresh paneer, perfect for curries.",
+    "farmName": "Joshi Dairy",
+    "location": "Mumbai",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 16,
+    "name": "Wheat",
+    "rating": 4.9,
+    "price": "₹40/kg",
+    "category": "grains",
+    "description": "Organic wheat, ideal for chapatis and bread.",
+    "farmName": "Patidar Farms",
+    "location": "Harda",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 17,
+    "name": "Rice",
+    "rating": 4.8,
+    "price": "₹60/kg",
+    "category": "grains",
+    "description": "Premium Basmati rice with rich aroma and flavor.",
+    "farmName": "Yadav Farms",
+    "location": "Chhattisgarh",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 18,
+    "name": "Barley",
+    "rating": 4.6,
+    "price": "₹55/kg",
+    "category": "grains",
+    "description": "Nutritious barley, great for soups and porridges.",
+    "farmName": "Mehta Farms",
+    "location": "Rajasthan",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 19,
+    "name": "Corn",
+    "rating": 4.7,
+    "price": "₹30/kg",
+    "category": "grains",
+    "description": "Golden corn kernels, fresh and sweet.",
+    "farmName": "Singh Farms",
+    "location": "Punjab",
+    "image": "@/assets/TestImages/TestImage.png"
+  },
+  {
+    "id": 20,
+    "name": "Oats",
+    "rating": 4.5,
+    "price": "₹90/kg",
+    "category": "grains",
+    "description": "Rolled oats, a healthy choice for breakfast.",
+    "farmName": "Rana Farms",
+    "location": "Himachal",
+    "image": "@/assets/TestImages/TestImage.png"
+  }
+]
