@@ -40,7 +40,7 @@ const LoginScreen = () => {
       setError("Number must be exactly 10 digits");
     } else {
       setError("");
-      router.push("./OTP")
+      router.push("/login/otp")
     }
   };
 

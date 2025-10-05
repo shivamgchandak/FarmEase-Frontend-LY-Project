@@ -90,13 +90,14 @@ const styles = StyleSheet.create({
   cardsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: 10,
     padding: 10,
   },
   cardWrapper: {
-    width: '48%',
+    // width: '48%',
     marginBottom: 10,
+    justifyContent: "center",
   },
 })
 

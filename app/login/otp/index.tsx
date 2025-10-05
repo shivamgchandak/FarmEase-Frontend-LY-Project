@@ -45,7 +45,7 @@ const OTPScreen: React.FC = () => {
       alert("Please enter a valid 6-digit OTP")
       return
     }
-    router.push("/createprofile")
+    router.push("/login/createprofile")
   }
 
   return (
@@ -58,7 +58,7 @@ const OTPScreen: React.FC = () => {
       <View style={styles.main}>
         <Text style={styles.title}>Verify Your Number</Text>
         <Image
-          source={require("../../assets/images/OTPImage.png")}
+          source={require("@/assets/images/OTPImage.png")}
           style={styles.welcomeimage}
         />
         <Text style={styles.subtitle}>

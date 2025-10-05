@@ -100,7 +100,7 @@ const CreateProfileScreen: React.FC = () => {
           source={
             selectedImage
               ? { uri: selectedImage }
-              : require("../../assets/images/CreateProfileImage.png")
+              : require("@/assets/images/CreateProfileImage.png")
           }
           style={styles.welcomeimage}
         />

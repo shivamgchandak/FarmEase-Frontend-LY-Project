@@ -139,8 +139,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginBottom: 15,
+    gap: 20
   },
   productCardWrapper: {},
 })

@@ -7,10 +7,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const produceOptions = [
-  { key: "vegetables", label: "Vegetables", image: require("../../assets/images/CategoryVegetables.png") },
-  { key: "fruits", label: "Fruits", image: require("../../assets/images/CategoryFruits.png") },
-  { key: "dairy", label: "Dairy", image: require("../../assets/images/CategoryDairy.png") },
-  { key: "grains", label: "Grains", image: require("../../assets/images/CategoryGrains.png") },
+  { key: "vegetables", label: "Vegetables", image: require("@/assets/images/CategoryVegetables.png") },
+  { key: "fruits", label: "Fruits", image: require("@/assets/images/CategoryFruits.png") },
+  { key: "dairy", label: "Dairy", image: require("@/assets/images/CategoryDairy.png") },
+  { key: "grains", label: "Grains", image: require("@/assets/images/CategoryGrains.png") },
 ]
 
 const FarmDetailScreen = () => {
@@ -48,7 +48,7 @@ const FarmDetailScreen = () => {
       alert("Please fill farm name, farm location, and select at least one produce.")
       return
     }
-    router.push("/buyerhomepage")
+    router.push("/buyer")
   }
 
   return (

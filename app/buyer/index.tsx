@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const buyerHomePage = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -28,7 +28,6 @@ const buyerHomePage = () => {
           keyboardShouldPersistTaps="handled"
         >
 
-          <AddressBar />
           <SeasonalProductAlert />
           <DealsOfTheDay />
           <SearchBar />
@@ -38,11 +37,7 @@ const buyerHomePage = () => {
         </ScrollView>
 
       </KeyboardAvoidingView>
-
-      <View style={styles.navbarContainer}>
-        <BottomNavbar />
-      </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

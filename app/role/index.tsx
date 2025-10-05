@@ -18,7 +18,11 @@ const RoleScreen = () => {
 
   const handleSelect = (role: string) => {
     setSelectedRole(role);
-    router.push("/FarmDetailProfile");
+    if(role == "buyer") {
+      router.push("/buyer")
+    } else {
+          router.push("/farmer");
+    }
   };
 
   return (

@@ -13,7 +13,7 @@ const DealsOfTheDay = () => {
 
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Deals of the Day</Text>
-        <TouchableOpacity onPress={() => router.push("/buyerDealsOfTheDayPage")}>
+        <TouchableOpacity onPress={() => router.push("/buyer/deals-of-day")}>
           <Image 
             source={require("@/assets/images/DropdownBottomArrow.png")} 
             style={styles.viewMoreButton} 
