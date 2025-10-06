@@ -1,9 +1,9 @@
+// store/authStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-
-const AUTH_SERVICE_URL = 'https://e6e91d7aa78e.ngrok-free.app/api';
+import { authAxios } from '@/api/axiosInstance';
+import { ENDPOINTS } from '@/api/config';
 
 interface User {
   id: string;
@@ -52,7 +52,7 @@ export const useAuthStore = create<AuthState>()(
       login: async (email: string, password: string) => {
         set({ isLoading: true, error: null });
         try {
-          const response = await axios.post(`${AUTH_SERVICE_URL}/auth/login`, {
+          const response = await authAxios.post(ENDPOINTS.AUTH.LOGIN, {
             email,
             password,
           });
@@ -80,7 +80,7 @@ export const useAuthStore = create<AuthState>()(
       register: async (data: RegisterData) => {
         set({ isLoading: true, error: null });
         try {
-          const response = await axios.post(`${AUTH_SERVICE_URL}/auth/register`, data);
+          const response = await authAxios.post(ENDPOINTS.AUTH.REGISTER, data);
 
           const { user, accessToken, refreshToken } = response.data;
 
@@ -107,8 +107,8 @@ export const useAuthStore = create<AuthState>()(
         
         try {
           if (accessToken && refreshToken) {
-            await axios.post(
-              `${AUTH_SERVICE_URL}/auth/logout`,
+            await authAxios.post(
+              ENDPOINTS.AUTH.LOGOUT,
               { refreshToken },
               {
                 headers: { Authorization: `Bearer ${accessToken}` },
@@ -136,7 +136,7 @@ export const useAuthStore = create<AuthState>()(
         }
 
         try {
-          const response = await axios.post(`${AUTH_SERVICE_URL}/token/refresh`, {
+          const response = await authAxios.post(ENDPOINTS.AUTH.REFRESH, {
             refreshToken,
           });
 

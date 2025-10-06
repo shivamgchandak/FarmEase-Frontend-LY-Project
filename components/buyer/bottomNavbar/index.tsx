@@ -1,8 +1,9 @@
+// components/buyer/bottomNavbar.tsx
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-type TabKey = "Home" | "Farmers" | "Cart" | "Favourites";
+type TabKey = "Home" | "Farmers" | "Orders" | "Cart" | "Favourites";
 
 const BottomNavbar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const tabs: { key: TabKey; route: string; icon: any; label: string }[] = [
@@ -19,6 +20,12 @@ const BottomNavbar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
       label: "Farmers",
     },
     {
+      key: "Orders",
+      route: "orders",
+      icon: require("../../../assets/images/BuyerNavbarOrders.png"), // Add this icon
+      label: "Orders",
+    },
+    {
       key: "Cart",
       route: "cart",
       icon: require("../../../assets/images/BuyerNavbarCart.png"),
@@ -32,14 +39,14 @@ const BottomNavbar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
     },
   ];
 
-  const currentRoute = state.routes[state.index].name; // ✅ get active route name
+  const currentRoute = state.routes[state.index].name;
 
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
         <View style={styles.maintab}>
           {tabs.map((tab) => {
-            const isFocused = currentRoute === tab.route; // ✅ match by route name
+            const isFocused = currentRoute === tab.route;
 
             const onPress = () => {
               const event = navigation.emit({
@@ -65,10 +72,7 @@ const BottomNavbar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
                     <View style={isFocused ? styles.activeIconWrapperSub : undefined}>
                       <Image
                         source={tab.icon}
-                        style={[
-                          styles.icon,
-                          // { tintColor: isFocused ? "#3B88C3" : "#999" },
-                        ]}
+                        style={styles.icon}
                       />
                     </View>
                   </View>

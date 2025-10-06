@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Image, StyleSheet, View } from 'react-native';
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import BuyerButton from '../buyerButton';
 import DiscountTab from '../CardModalDiscountTab';
 import FarmLocation from '../FarmLocation';
@@ -74,7 +74,7 @@ const CardModal: React.FC<CardModalProps> = ({
         pricePerUnit: product.price,
         imageUrl: product.images?.[0]?.url,
         isUrgent: product.isUrgent,
-        expiryDate: product.expiryDate,
+        // expiryDate: product.expiryDate,
       });
 
       Alert.alert('Success', `${product.name} added to cart!`);
@@ -98,7 +98,7 @@ const CardModal: React.FC<CardModalProps> = ({
     : image || require('@/assets/TestImages/TestImage.png');
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <View style={styles.containerTop}>
         <View>
           <Image source={imageSource} style={styles.containerTopImage} />
@@ -166,7 +166,7 @@ const CardModal: React.FC<CardModalProps> = ({
           />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

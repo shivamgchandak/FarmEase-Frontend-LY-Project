@@ -1,5 +1,9 @@
+
+// ============================================
+// store/orderStore.ts (Updated to use consumerAxios)
 import { create } from 'zustand';
-import axiosInstance from '@/api/axiosInstance';
+import { consumerAxios } from '@/api/axiosInstance';
+import { ENDPOINTS } from '@/api/config';
 
 interface Order {
   _id: string;
@@ -38,7 +42,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   createOrder: async (orderData) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.post('/orders/create', orderData);
+      const response = await consumerAxios.post(ENDPOINTS.ORDERS.CREATE, orderData);
       set({ isLoading: false });
       return response.data;
     } catch (error: any) {
@@ -53,7 +57,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   fetchOrders: async (filters = {}) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get('/orders', { params: filters });
+      const response = await consumerAxios.get(ENDPOINTS.ORDERS.LIST, { params: filters });
       set({ 
         orders: response.data.orders || response.data, 
         isLoading: false 
@@ -69,7 +73,9 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   fetchOrderById: async (orderId: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get(`/orders/${orderId}`);
+      const response = await consumerAxios.get(
+        ENDPOINTS.ORDERS.DETAIL.replace(':orderId', orderId)
+      );
       set({ selectedOrder: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -82,7 +88,10 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   cancelOrder: async (orderId: string, reason: string) => {
     set({ isLoading: true, error: null });
     try {
-      await axiosInstance.patch(`/orders/${orderId}/cancel`, { reason });
+      await consumerAxios.patch(
+        ENDPOINTS.ORDERS.CANCEL.replace(':orderId', orderId), 
+        { reason }
+      );
       
       // Refresh orders
       await get().fetchOrders();
@@ -99,7 +108,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   createPaymentIntent: async (amount: number) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.post('/orders/create-payment-intent', { amount });
+      const response = await consumerAxios.post(ENDPOINTS.ORDERS.PAYMENT_INTENT, { amount });
       set({ isLoading: false });
       return response.data;
     } catch (error: any) {
@@ -114,7 +123,10 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   updatePaymentStatus: async (orderId: string, paymentData: any) => {
     set({ isLoading: true, error: null });
     try {
-      await axiosInstance.patch(`/orders/${orderId}/payment`, paymentData);
+      await consumerAxios.patch(
+        ENDPOINTS.ORDERS.UPDATE_PAYMENT.replace(':orderId', orderId), 
+        paymentData
+      );
       set({ isLoading: false });
     } catch (error: any) {
       set({ 

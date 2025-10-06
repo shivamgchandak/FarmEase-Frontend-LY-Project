@@ -1,40 +1,47 @@
-import axiosInstance from './axiosInstance';
+// api/consumerApi.ts
+import { consumerAxios } from './axiosInstance';
+import { ENDPOINTS } from './config';
 
 export const consumerApi = {
   // Profile
-  getProfile: () => axiosInstance.get('/consumer/profile'),
-  updateProfile: (data: any) => axiosInstance.put('/consumer/profile', data),
+  getProfile: () => consumerAxios.get(ENDPOINTS.CONSUMER.PROFILE),
+  updateProfile: (data: any) => consumerAxios.put(ENDPOINTS.CONSUMER.PROFILE, data),
   
   // Addresses
-  addAddress: (data: any) => axiosInstance.post('/consumer/addresses', data),
+  addAddress: (data: any) => consumerAxios.post(ENDPOINTS.CONSUMER.ADDRESSES, data),
   updateAddress: (id: string, data: any) => 
-    axiosInstance.put(`/consumer/addresses/${id}`, data),
+    consumerAxios.put(`${ENDPOINTS.CONSUMER.ADDRESSES}/${id}`, data),
   deleteAddress: (id: string) => 
-    axiosInstance.delete(`/consumer/addresses/${id}`),
+    consumerAxios.delete(`${ENDPOINTS.CONSUMER.ADDRESSES}/${id}`),
   
   // Products
-  getProducts: (params?: any) => axiosInstance.get('/products', { params }),
-  getProductById: (id: string) => axiosInstance.get(`/products/${id}`),
-  getUrgentProducts: () => axiosInstance.get('/products/urgent'),
+  getProducts: (params?: any) => consumerAxios.get(ENDPOINTS.PRODUCTS.LIST, { params }),
+  getProductById: (id: string) => 
+    consumerAxios.get(ENDPOINTS.PRODUCTS.DETAIL.replace(':id', id)),
+  getUrgentProducts: () => consumerAxios.get(ENDPOINTS.PRODUCTS.URGENT),
+  searchProducts: (query: string) => 
+    consumerAxios.get(ENDPOINTS.PRODUCTS.SEARCH, { params: { q: query } }),
+  getCategories: () => consumerAxios.get(ENDPOINTS.PRODUCTS.CATEGORIES),
   
   // Cart
-  getCart: () => axiosInstance.get('/cart'),
-  addToCart: (data: any) => axiosInstance.post('/cart/add', data),
+  getCart: () => consumerAxios.get(ENDPOINTS.CART.GET),
+  addToCart: (data: any) => consumerAxios.post(ENDPOINTS.CART.ADD, data),
   updateCartItem: (itemId: string, data: any) => 
-    axiosInstance.put(`/cart/update/${itemId}`, data),
+    consumerAxios.put(ENDPOINTS.CART.UPDATE.replace(':itemId', itemId), data),
   removeFromCart: (itemId: string) => 
-    axiosInstance.delete(`/cart/remove/${itemId}`),
-  clearCart: () => axiosInstance.delete('/cart/clear'),
+    consumerAxios.delete(ENDPOINTS.CART.REMOVE.replace(':itemId', itemId)),
+  clearCart: () => consumerAxios.delete(ENDPOINTS.CART.CLEAR),
   
   // Orders
-  createOrder: (data: any) => axiosInstance.post('/orders/create', data),
+  createOrder: (data: any) => consumerAxios.post(ENDPOINTS.ORDERS.CREATE, data),
   createPaymentIntent: (amount: number) => 
-    axiosInstance.post('/orders/create-payment-intent', { amount }),
+    consumerAxios.post(ENDPOINTS.ORDERS.PAYMENT_INTENT, { amount }),
   updatePaymentStatus: (orderId: string, data: any) => 
-    axiosInstance.patch(`/orders/${orderId}/payment`, data),
-  getOrders: (params?: any) => axiosInstance.get('/orders', { params }),
-  getOrderById: (orderId: string) => axiosInstance.get(`/orders/${orderId}`),
+    consumerAxios.patch(ENDPOINTS.ORDERS.UPDATE_PAYMENT.replace(':orderId', orderId), data),
+  getOrders: (params?: any) => consumerAxios.get(ENDPOINTS.ORDERS.LIST, { params }),
+  getOrderById: (orderId: string) => 
+    consumerAxios.get(ENDPOINTS.ORDERS.DETAIL.replace(':orderId', orderId)),
   cancelOrder: (orderId: string, reason: string) => 
-    axiosInstance.patch(`/orders/${orderId}/cancel`, { reason }),
-  getOrderStats: () => axiosInstance.get('/orders/stats/summary'),
+    consumerAxios.patch(ENDPOINTS.ORDERS.CANCEL.replace(':orderId', orderId), { reason }),
+  getOrderStats: () => consumerAxios.get('/orders/stats/summary'),
 };

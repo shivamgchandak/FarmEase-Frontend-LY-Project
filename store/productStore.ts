@@ -1,12 +1,21 @@
+// store/productStore.ts (Updated to use consumerAxios)
 import { create } from 'zustand';
-import axiosInstance from '@/api/axiosInstance';
+import { consumerAxios } from '@/api/axiosInstance';
+import { ENDPOINTS } from '@/api/config';
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+}
 
 interface Product {
   _id: string;
   productId: string;
   name: string;
   description: string;
-  category: string;
+  category: Category | string;
   farmerId: string;
   farmerName: string;
   farmerLocation: {
@@ -30,7 +39,7 @@ interface Product {
 interface ProductState {
   products: Product[];
   urgentProducts: Product[];
-  categories: any[];
+  categories: Category[];
   selectedProduct: Product | null;
   isLoading: boolean;
   error: string | null;
@@ -55,7 +64,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchProducts: async (filters = {}) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get('/products', { params: filters });
+      const response = await consumerAxios.get(ENDPOINTS.PRODUCTS.LIST, { params: filters });
       set({ 
         products: response.data.products || response.data, 
         isLoading: false 
@@ -71,7 +80,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchUrgentProducts: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get('/products/urgent');
+      const response = await consumerAxios.get(ENDPOINTS.PRODUCTS.URGENT);
       set({ urgentProducts: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -84,7 +93,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchProductById: async (id: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get(`/products/${id}`);
+      const response = await consumerAxios.get(ENDPOINTS.PRODUCTS.DETAIL.replace(':id', id));
       set({ selectedProduct: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -97,7 +106,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchCategories: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get('/categories');
+      const response = await consumerAxios.get(ENDPOINTS.PRODUCTS.CATEGORIES);
       set({ categories: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -110,8 +119,8 @@ export const useProductStore = create<ProductState>((set, get) => ({
   searchProducts: async (query: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get('/products', {
-        params: { search: query }
+      const response = await consumerAxios.get(ENDPOINTS.PRODUCTS.SEARCH, {
+        params: { q: query }
       });
       set({ products: response.data.products || response.data, isLoading: false });
     } catch (error: any) {
@@ -124,3 +133,11 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
   clearError: () => set({ error: null }),
 }));
+
+// Helper function to get category name
+export const getCategoryName = (category: Category | string): string => {
+  if (typeof category === 'string') {
+    return category;
+  }
+  return category?.name || 'N/A';
+};

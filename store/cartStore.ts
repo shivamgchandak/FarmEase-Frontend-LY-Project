@@ -1,5 +1,9 @@
+
+// ============================================
+// store/cartStore.ts (Updated to use consumerAxios)
 import { create } from 'zustand';
-import axiosInstance from '@/api/axiosInstance';
+import { consumerAxios } from '@/api/axiosInstance';
+import { ENDPOINTS } from '@/api/config';
 
 interface CartItem {
   _id: string;
@@ -43,7 +47,7 @@ export const useCartStore = create<CartState>((set, get) => ({
   fetchCart: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.get('/cart');
+      const response = await consumerAxios.get(ENDPOINTS.CART.GET);
       set({ cart: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -56,7 +60,7 @@ export const useCartStore = create<CartState>((set, get) => ({
   addToCart: async (item) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.post('/cart/add', item);
+      const response = await consumerAxios.post(ENDPOINTS.CART.ADD, item);
       set({ cart: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -70,7 +74,10 @@ export const useCartStore = create<CartState>((set, get) => ({
   updateCartItem: async (itemId: string, quantity: number) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.put(`/cart/update/${itemId}`, { quantity });
+      const response = await consumerAxios.put(
+        ENDPOINTS.CART.UPDATE.replace(':itemId', itemId), 
+        { quantity }
+      );
       set({ cart: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -84,7 +91,9 @@ export const useCartStore = create<CartState>((set, get) => ({
   removeFromCart: async (itemId: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.delete(`/cart/remove/${itemId}`);
+      const response = await consumerAxios.delete(
+        ENDPOINTS.CART.REMOVE.replace(':itemId', itemId)
+      );
       set({ cart: response.data, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -98,7 +107,7 @@ export const useCartStore = create<CartState>((set, get) => ({
   clearCart: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axiosInstance.delete('/cart/clear');
+      const response = await consumerAxios.delete(ENDPOINTS.CART.CLEAR);
       set({ cart: response.data.cart, isLoading: false });
     } catch (error: any) {
       set({ 

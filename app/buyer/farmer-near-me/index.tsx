@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const farmersNearMePage = () => {
-
+    
     const [visibleCount, setVisibleCount] = useState(8);
     const dealsToShow = dealsData.slice(0, visibleCount);
 
@@ -17,7 +17,7 @@ const farmersNearMePage = () => {
 
     return (
 
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
 
             <Text style={styles.containerTitle}>Farmers near you</Text>
 
@@ -56,7 +56,7 @@ const farmersNearMePage = () => {
             )}
             </ScrollView>
 
-        </SafeAreaView>
+        </View>
     )
 }
 

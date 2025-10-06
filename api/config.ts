@@ -1,12 +1,13 @@
+// api/config.ts
 export const API_CONFIG = {
-  AUTH_SERVICE: 'http://localhost:3000/api/auth',
-  CONSUMER_SERVICE: 'http://localhost:3001/api',
-  FARMER_SERVICE: 'http://localhost:3002/api',
-  PRODUCT_SERVICE: 'http://localhost:3003/api',
+  AUTH_SERVICE: 'https://wvsgtjj7-3000.inc1.devtunnels.ms/api',
+  CONSUMER_SERVICE: 'https://wvsgtjj7-3001.inc1.devtunnels.ms/api',
+  FARMER_SERVICE: 'https://wvsgtjj7-3002.inc1.devtunnels.ms/api',
+  PRODUCT_SERVICE: 'https://wvsgtjj7-3003.inc1.devtunnels.ms/api', // Usually same as consumer
 };
 
 export const ENDPOINTS = {
-  // Auth
+  // Auth endpoints (use AUTH_SERVICE)
   AUTH: {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register', 
@@ -16,13 +17,13 @@ export const ENDPOINTS = {
     REFRESH: '/token/refresh',
   },
   
-  // Consumer
+  // Consumer endpoints (use CONSUMER_SERVICE)
   CONSUMER: {
     PROFILE: '/consumer/profile',
     ADDRESSES: '/consumer/addresses',
   },
   
-  // Products
+  // Product endpoints (use CONSUMER_SERVICE or PRODUCT_SERVICE)
   PRODUCTS: {
     LIST: '/products',
     DETAIL: '/products/:id',
@@ -31,7 +32,7 @@ export const ENDPOINTS = {
     SEARCH: '/products/search',
   },
   
-  // Cart
+  // Cart endpoints (use CONSUMER_SERVICE)
   CART: {
     GET: '/cart',
     ADD: '/cart/add',
@@ -40,7 +41,7 @@ export const ENDPOINTS = {
     CLEAR: '/cart/clear',
   },
   
-  // Orders
+  // Order endpoints (use CONSUMER_SERVICE)
   ORDERS: {
     CREATE: '/orders/create',
     LIST: '/orders',
@@ -50,12 +51,13 @@ export const ENDPOINTS = {
     UPDATE_PAYMENT: '/orders/:orderId/payment',
   },
   
-  // Farmer
+  // Farmer endpoints (use FARMER_SERVICE)
   FARMER: {
     PROFILE: '/farmer/profile',
     DASHBOARD: '/farmer/dashboard',
     PRODUCTS: '/farmer/my-products',
     EARNINGS: '/earnings',
     ANALYTICS: '/analytics',
+    GET: '/farmer/nearby?latitude=19.0760&longitude=72.8777'
   },
 };
