@@ -1,16 +1,41 @@
+// components/buyer/homePage/DealsOfTheDay/index.tsx
 import { useRouter } from 'expo-router';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import dealsData from '../../../../TestData/DealsOfTheDay/data.json';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { consumerApi } from '@/api/consumerApi';
 import CardModal from '../../CardModal';
 
 const DealsOfTheDay = () => {
   const router = useRouter();
+  const [deals, setDeals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   
-  const dealsToShow = dealsData.slice(0, 4);
+  useEffect(() => {
+    fetchUrgentProducts();
+  }, []);
+
+  const fetchUrgentProducts = async () => {
+    try {
+      setLoading(true);
+      const response = await consumerApi.getUrgentProducts();
+      setDeals(response.data.slice(0, 4));
+    } catch (error) {
+      console.error('Failed to fetch deals:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#169E1C" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Deals of the Day</Text>
         <TouchableOpacity onPress={() => router.push("/buyer/deals-of-day")}>
@@ -26,19 +51,19 @@ const DealsOfTheDay = () => {
         showsHorizontalScrollIndicator={false} 
         contentContainerStyle={styles.cardsContainer}
       >
-        {dealsToShow.map((item) => (
+        {deals.map((item) => (
           <CardModal
-            key={item.id}
-            image={require('@/assets/TestImages/TestImage.png')}
+            key={item._id}
+            image={item.images?.[0]?.url ? { uri: item.images[0].url } : require('@/assets/TestImages/TestImage.png')}
             name={item.name}
-            rating={item.rating.toString()}
-            price={item.price}
-            priceBefore={item.priceBefore}
-            discount={item.discount}
+            rating={item.rating?.average?.toString() || "0"}
+            price={`₹${item.price}`}
+            priceBefore={item.originalPrice ? `₹${item.originalPrice}` : undefined}
+            discount={item.discountPercent ? `${item.discountPercent}%` : undefined}
             description={item.description}
             maxLength={50}
-            farmName={item.farmName}
-            location={item.location}
+            farmName={item.farmerName}
+            location={item.farmerLocation?.city || ""}
             buttonText="Add"
             showWishlist={false}
           />
@@ -50,6 +75,10 @@ const DealsOfTheDay = () => {
 
 const styles = StyleSheet.create({
   container: {},
+  loadingContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
   titleContainer:{
     flexDirection: 'row',
     alignItems: 'center',

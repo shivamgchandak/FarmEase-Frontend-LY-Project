@@ -24,7 +24,7 @@ export default function Welcome() {
       <View>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("/buyer")}
+          onPress={() => router.push("/login")}
         >
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>

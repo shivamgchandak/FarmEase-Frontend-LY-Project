@@ -1,24 +1,30 @@
+// app/login/index.tsx
 import ProfileButton from '@/components/profileButton'
 import GoBackButton from '@/components/ProfileGoBack'
 import ProfileInput from '@/components/profileInput'
 import ProgressStepper from '@/components/ProfileProgressBar'
+import { useAuthStore } from '@/store/authStore'
 import { useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  ActivityIndicator
 } from 'react-native'
 
 const LoginScreen = () => {
   const router = useRouter();
-  const [number, setNumber] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  
+  const { login, isLoading, error, clearError, isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
@@ -30,17 +36,40 @@ const LoginScreen = () => {
     };
   }, []);
 
-  const handleNumberChange = (text: string) => {
-    const cleaned = text.replace(/[^0-9]/g, "").slice(0, 10);
-    setNumber(cleaned);
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/buyer");
+    }
+  }, [isAuthenticated]);
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   };
 
-  const handleSubmit = () => {
-    if (number.length !== 10) {
-      setError("Number must be exactly 10 digits");
-    } else {
-      setError("");
-      router.push("/login/otp")
+  const handleSubmit = async () => {
+    clearError();
+    
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      Alert.alert("Error", "Please enter a valid email address");
+      return;
+    }
+
+    if (password.length < 8) {
+      Alert.alert("Error", "Password must be at least 8 characters");
+      return;
+    }
+
+    try {
+      await login(email, password);
+      // Navigation handled by useEffect
+    } catch (err) {
+      Alert.alert("Login Failed", error || "An error occurred");
     }
   };
 
@@ -52,23 +81,40 @@ const LoginScreen = () => {
       {!isKeyboardVisible && <ProgressStepper currentStep="profile" />}
 
       <View style={styles.main}>
-        <Text style={styles.title}>Welcome!</Text>
+        <Text style={styles.title}>Welcome Back!</Text>
         <Image
           source={require("../../assets/images/LoginImage.png")}
           style={styles.welcomeimage}
         />
 
+        {error && <Text style={styles.errorText}>{error}</Text>}
+
         <ProfileInput
-          placeholder="Enter your number"
-          type="number"
-          value={number}
-          onChangeText={handleNumberChange}
+          placeholder="Enter your email"
+          type="email"
+          value={email}
+          onChangeText={setEmail}
         />
 
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        <ProfileInput
+          placeholder="Enter your password"
+          type="password"
+          value={password}
+          onChangeText={setPassword}
+        />
 
-        <ProfileButton text="Continue" onPress={handleSubmit} />
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#169E1C" />
+        ) : (
+          <ProfileButton text="Login" onPress={handleSubmit} />
+        )}
 
+        <Text style={styles.signupText}>
+          Don't have an account?{' '}
+          <Text style={styles.signupLink} onPress={() => router.push('/login/createprofile')}>
+            Sign up
+          </Text>
+        </Text>
       </View>
 
       {!isKeyboardVisible && <GoBackButton path="language" />}
@@ -102,17 +148,16 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 14,
     marginTop: 5,
+    textAlign: 'center',
   },
-  button: {
-    backgroundColor: "#169E1C",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 8,
+  signupText: {
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+    color: '#1F1F1FA6',
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
+  signupLink: {
+    color: '#169E1C',
+    fontWeight: '500',
   },
 });
 

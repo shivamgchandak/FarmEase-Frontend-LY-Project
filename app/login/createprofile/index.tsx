@@ -1,10 +1,14 @@
+// app/login/createprofile/index.tsx
 import ProgressStepper from '@/components/ProfileProgressBar'
 import ProfileButton from '@/components/profileButton'
 import ProfileInput from '@/components/profileInput'
+import { useAuthStore } from '@/store/authStore'
 import * as ImagePicker from 'expo-image-picker'
 import { useRouter } from 'expo-router'
 import React, { useEffect, useRef, useState } from 'react'
 import {
+    Alert,
+    ActivityIndicator,
     Image,
     Keyboard,
     KeyboardAvoidingView,
@@ -23,25 +27,33 @@ const CreateProfileScreen: React.FC = () => {
 
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
-  const [city, setCity] = useState("")
+  const [phone, setPhone] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
+  const { register, isLoading, error, clearError, isAuthenticated } = useAuthStore();
   const inputRef = useRef<TextInput>(null)
 
   useEffect(() => {
-      const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true))
-      const hideSub = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false))
-  
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 100)
-  
-      return () => {
-        showSub.remove()
-        hideSub.remove()
-      }
-    }, [])
+    const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true))
+    const hideSub = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false))
 
-  // Pick Image
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 100)
+
+    return () => {
+      showSub.remove()
+      hideSub.remove()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/buyer");
+    }
+  }, [isAuthenticated]);
+
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
     if (!permissionResult.granted) {
@@ -61,29 +73,61 @@ const CreateProfileScreen: React.FC = () => {
     }
   }
 
-  // Remove Image
   const removeImage = () => {
     setSelectedImage(null)
   }
 
-  // Email validation regex
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return regex.test(email)
   }
 
-  const handleNext = () => {
-    if (!fullName || !email || !city) {
-      alert("Please fill all required fields (Full Name, Email, City)")
+  const handlePhoneChange = (text: string) => {
+    const cleaned = text.replace(/[^0-9]/g, "").slice(0, 10);
+    setPhone(cleaned);
+  };
+
+  const handleRegister = async () => {
+    clearError();
+
+    if (!fullName || !email || !phone || !password || !confirmPassword) {
+      Alert.alert("Error", "Please fill all required fields")
       return
     }
 
     if (!validateEmail(email)) {
-      alert("Please enter a valid email address")
+      Alert.alert("Error", "Please enter a valid email address")
       return
     }
 
-    router.push("/role")
+    if (phone.length !== 10) {
+      Alert.alert("Error", "Phone number must be 10 digits")
+      return
+    }
+
+    if (password.length < 8) {
+      Alert.alert("Error", "Password must be at least 8 characters")
+      return
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match")
+      return
+    }
+
+    try {
+      await register({
+        name: fullName,
+        email,
+        phone,
+        password,
+        role: 'consumer'
+      });
+      // Navigation handled by useEffect
+    } catch (err) {
+      console.error(err)
+      Alert.alert("Registration Failed", error || "An error occurred")
+    }
   }
 
   return (
@@ -94,7 +138,9 @@ const CreateProfileScreen: React.FC = () => {
       {!isKeyboardVisible && <ProgressStepper currentStep="profile" />}
 
       <View style={styles.main}>
-        <Text style={styles.title}>Create Profile</Text>
+        <Text style={styles.title}>Create Account</Text>
+
+        {error && <Text style={styles.errorText}>{error}</Text>}
 
         <Image
           source={
@@ -106,15 +152,15 @@ const CreateProfileScreen: React.FC = () => {
         />
 
         <View style={styles.uploadContainer}>
-            {selectedImage ? (
-                <TouchableOpacity onPress={removeImage}>
-                    <Text style={styles.uploadText}>Remove Picture</Text>
-                </TouchableOpacity>
-                ) : (
-                <TouchableOpacity onPress={pickImage}>
-                    <Text style={styles.uploadText}>Upload Picture</Text>
-                </TouchableOpacity>
-            )}
+          {selectedImage ? (
+            <TouchableOpacity onPress={removeImage}>
+              <Text style={styles.uploadText}>Remove Picture</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={pickImage}>
+              <Text style={styles.uploadText}>Upload Picture</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         <ProfileInput
@@ -126,19 +172,46 @@ const CreateProfileScreen: React.FC = () => {
 
         <ProfileInput
           placeholder="Enter email"
-          type="text"
+          type="email"
           value={email}
           onChangeText={setEmail}
         />
 
         <ProfileInput
-          placeholder="Enter city name"
-          type="text"
-          value={city}
-          onChangeText={setCity}
+          placeholder="Enter phone number"
+          type="number"
+          value={phone}
+          onChangeText={handlePhoneChange}
         />
 
-        {!isKeyboardVisible && <ProfileButton text="Next" onPress={handleNext} />}
+        <ProfileInput
+          placeholder="Enter password"
+          type="password"
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        <ProfileInput
+          placeholder="Confirm password"
+          type="password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+
+        {!isKeyboardVisible && (
+          isLoading ? (
+            <ActivityIndicator size="large" color="#169E1C" />
+          ) : (
+            <ProfileButton text="Register" onPress={handleRegister} />
+          )
+        )}
+
+        <Text style={styles.loginText}>
+          Already have an account?{' '}
+          <Text style={styles.loginLink} onPress={() => router.push('/login')}>
+            Login
+          </Text>
+        </Text>
       </View>
     </KeyboardAvoidingView>
   )
@@ -178,9 +251,22 @@ const styles = StyleSheet.create({
     color: "#1F1F1F59",
     fontSize: 15,
     fontFamily: "Poppins-Regular",
-    fontWeight: 400,
+    fontWeight: "400",
   },
-
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  loginText: {
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+    color: '#1F1F1FA6',
+  },
+  loginLink: {
+    color: '#169E1C',
+    fontWeight: '500',
+  },
 })
 
 export default CreateProfileScreen
