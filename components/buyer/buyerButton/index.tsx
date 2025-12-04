@@ -1,15 +1,23 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, TextStyle, ViewStyle } from "react-native";
+import {
+  DimensionValue,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle
+} from "react-native";
 
 interface BuyerButtonProps {
-  text: string;            
-  onPress: () => void;      
-  height?: number;             
-  width?: number;            
-  backgroundColor?: string;    
-  borderColor?: string;    
-  borderRadius?: number;     
+  text: string;
+  onPress: () => void;
+  height?: DimensionValue;
+  width?: DimensionValue;
+  backgroundColor?: string;
+  borderColor?: string;
+  borderRadius?: number;
   textStyle?: TextStyle;
+  // optional: disabled, loading, etc.
 }
 
 const BuyerButton: React.FC<BuyerButtonProps> = ({
@@ -22,20 +30,17 @@ const BuyerButton: React.FC<BuyerButtonProps> = ({
   borderRadius,
   textStyle,
 }) => {
+  // create typed style object and cast to ViewStyle to help TS
+  const dynamicStyle: ViewStyle = {
+    height: height as any,
+    width: width as any,
+    backgroundColor,
+    borderColor,
+    borderRadius,
+  };
+
   return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.button,
-        {
-          height,
-          width,
-          backgroundColor,
-          borderColor,
-          borderRadius,
-        },
-      ]}
-    >
+    <Pressable onPress={onPress} style={[styles.button, dynamicStyle]}>
       <Text style={[styles.defaultText, textStyle]}>{text}</Text>
     </Pressable>
   );
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#fff",
-    fontFamily: "Poppins-Medium"
+    fontFamily: "Poppins-Medium",
   } as TextStyle,
 });
 

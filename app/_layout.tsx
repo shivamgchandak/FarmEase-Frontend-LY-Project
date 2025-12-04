@@ -16,5 +16,6 @@ export default function RootLayout() {
     <Stack.Screen name="role" options={{headerShown: false}} />
     <Stack.Screen name="login" options={{headerShown: false}} />
     <Stack.Screen name="terms-condition/index" options={{headerShown: false}} />
+    <Stack.Screen name="farmer" options={{headerShown: false}} />
   </Stack>;
 }

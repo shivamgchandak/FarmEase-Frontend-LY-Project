@@ -5,7 +5,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
-const TodayFreshDealsHeader = (props: NativeStackHeaderProps) => {
+const Header = (props: NativeStackHeaderProps) => {
     const router = useRouter();
     return (
         <View style={styles.containerHeader}>
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     
     },
 })
-export default TodayFreshDealsHeader
+export default Header

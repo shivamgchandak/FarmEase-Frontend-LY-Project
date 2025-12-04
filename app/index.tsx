@@ -18,13 +18,13 @@ export default function Welcome() {
           source={require("@/assets/images/FarmeaseLogo.png")}
           style={styles.logoImage}
         />
-        <Text style={styles.subtitle}>From Faarm to You</Text>
+        <Text style={styles.subtitle}>From Farm to You</Text>
       </View>
 
       <View>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("/login")}
+          onPress={() => router.push("/farmer")}
         >
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>

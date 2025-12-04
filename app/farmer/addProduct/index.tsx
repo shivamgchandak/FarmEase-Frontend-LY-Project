@@ -1,16 +1,14 @@
-import NotificationCard from '@/components/farmer/homePage/Notification';
-import QuickActions from '@/components/farmer/homePage/QuickActions';
-import QuickStats from '@/components/farmer/homePage/QuickStats';
+import AddProductScreen from '@/components/farmer/addProduct';
 import React from 'react';
 import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    View
 } from 'react-native';
 
-const FarmerHomePage = () => {
+const AddProduct = () => {
 
   return (
     <View style={styles.container}>
@@ -24,9 +22,7 @@ const FarmerHomePage = () => {
           keyboardShouldPersistTaps="handled"
         >
 
-          <NotificationCard />
-          <QuickStats />
-          <QuickActions />
+          <AddProductScreen />
 
         </ScrollView>
       </KeyboardAvoidingView>
@@ -68,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FarmerHomePage;
+export default AddProduct;
